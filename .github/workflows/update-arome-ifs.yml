@@ -63,11 +63,9 @@ jobs:
         run: |
           source_dir="$PWD/build/national"
           publish_dir="$(mktemp -d)"
-          export GIT_CONFIG_COUNT=1
-          export GIT_CONFIG_KEY_0=http.https://github.com/.extraheader
-          export GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $(printf 'x-access-token:%s' "$GH_TOKEN" | base64 -w0)"
           git -C "$publish_dir" init -b data
           git -C "$publish_dir" remote add origin "https://github.com/$REPOSITORY.git"
+          git -C "$publish_dir" config credential.helper "!f() { if [ \"\$1\" = get ]; then echo username=x-access-token; echo password=\$GH_TOKEN; fi; }; f"
           git -C "$publish_dir" config user.name 'github-actions[bot]'
           git -C "$publish_dir" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           for attempt in 1 2 3 4; do

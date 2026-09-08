@@ -1,0 +1,1901 @@
+.aifs-card {
+    --aifs-navy: #073b63;
+    --aifs-blue: #086ca8;
+    --aifs-cyan: #1fb8d0;
+    --aifs-line: #d9e5ed;
+    --aifs-soft: #f3f8fb;
+    width: 100%;
+    max-width: 1180px;
+    box-sizing: border-box;
+    margin: 1.25rem auto;
+    overflow: hidden;
+    border: 1px solid #cbdce7;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 12px 30px rgba(7, 59, 99, .14);
+    color: #183242;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.aifs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 26px;
+    background: linear-gradient(120deg, var(--aifs-navy), #075887 62%, #0b83ac);
+    color: #fff;
+}
+
+.aifs-header h2 {
+    margin: 2px 0 5px;
+    color: #fff;
+    font-size: clamp(1.25rem, 2vw, 1.85rem);
+    line-height: 1.15;
+}
+
+.aifs-kicker,
+.aifs-meta {
+    margin: 0;
+}
+
+.aifs-kicker {
+    color: #aeefff;
+    font-size: .69rem;
+    font-weight: 800;
+    letter-spacing: .09em;
+}
+
+.aifs-meta {
+    color: #dceff7;
+    font-size: .82rem;
+}
+
+.aifs-meta span {
+    padding: 0 6px;
+}
+
+.aifs-badge {
+    min-width: 112px;
+    padding: 9px 12px;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .12);
+    text-align: center;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    line-height: 1.05;
+}
+
+.aifs-badge strong {
+    font-size: 1.18rem;
+}
+
+.aifs-card [hidden] {
+    display: none !important;
+}
+
+.aifs-toolbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 18px 22px;
+    border-bottom: 1px solid #cfe0e9;
+    background: linear-gradient(180deg, #f7fbfd, #edf6fa);
+}
+
+.aifs-search {
+    position: relative;
+    z-index: 5;
+    width: min(100%, 590px);
+}
+
+.aifs-search > label {
+    display: block;
+    margin: 0 0 6px;
+    color: var(--aifs-navy);
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.aifs-search-control {
+    position: relative;
+}
+
+.aifs-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    z-index: 1;
+    color: #337894;
+    font-size: 1.35rem;
+    line-height: 1;
+    transform: translateY(-52%);
+    pointer-events: none;
+}
+
+.aifs-card .aifs-city-input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 46px;
+    margin: 0;
+    padding: 9px 42px;
+    border: 2px solid #86b6ca;
+    border-radius: 10px;
+    outline: 0;
+    background: #fff;
+    box-shadow: 0 2px 7px rgba(7, 59, 99, .08);
+    color: #173c51;
+    font: 700 .96rem/1.2 Inter, "Segoe UI", Arial, sans-serif;
+    appearance: none;
+}
+
+.aifs-card .aifs-city-input:focus {
+    border-color: var(--aifs-blue);
+    box-shadow: 0 0 0 3px rgba(8, 108, 168, .17);
+}
+
+.aifs-card .aifs-city-input::-webkit-search-cancel-button {
+    cursor: pointer;
+}
+
+.aifs-search-results {
+    position: absolute;
+    top: 72px;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    max-height: 330px;
+    overflow-y: auto;
+    border: 1px solid #9fc4d5;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 14px 32px rgba(7, 59, 99, .24);
+}
+
+.aifs-card .aifs-search-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 52px;
+    margin: 0;
+    padding: 9px 13px;
+    border: 0;
+    border-bottom: 1px solid #dce9ef;
+    border-radius: 0;
+    background: #fff;
+    color: #183b4e;
+    text-align: left;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.aifs-card .aifs-search-result:last-child {
+    border-bottom: 0;
+}
+
+.aifs-card .aifs-search-result:hover,
+.aifs-card .aifs-search-result:focus,
+.aifs-card .aifs-search-result.is-active {
+    outline: 0;
+    background: #e6f5fb;
+    color: #073b63;
+}
+
+.aifs-result-name {
+    font-size: .9rem;
+    font-weight: 800;
+}
+
+.aifs-result-details {
+    color: #587583;
+    font-size: .74rem;
+    white-space: nowrap;
+}
+
+.aifs-search-status {
+    min-height: 18px;
+    margin: 5px 2px 0;
+    color: #55717f;
+    font-size: .72rem;
+}
+
+.aifs-search-status.aifs-search-error {
+    color: #9a2727;
+    font-weight: 700;
+}
+
+.aifs-coverage {
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-top: 22px;
+    color: #496978;
+    font-size: .72rem;
+}
+
+.aifs-coverage strong {
+    color: var(--aifs-navy);
+    font-size: .95rem;
+}
+
+.aifs-table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-color: #9bb9ca #edf4f7;
+}
+
+.aifs-stale {
+    margin: 0;
+    padding: 10px 18px;
+    border-bottom: 1px solid #e7c56c;
+    background: #fff6d8;
+    color: #704f00;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.aifs-table {
+    width: 100%;
+    min-width: 820px;
+    margin: 0;
+    border: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: .84rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.aifs-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    padding: 10px 7px;
+    border: 0;
+    border-bottom: 2px solid #b8d2e1;
+    background: #e8f3f8;
+    color: #17435c;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: .69rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    white-space: nowrap;
+}
+
+.aifs-table tbody th,
+.aifs-table tbody td {
+    padding: 8px 7px;
+    border: 0;
+    border-bottom: 1px solid var(--aifs-line);
+    background: #fff;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.aifs-table .aifs-loading {
+    height: 110px;
+    background: #fff !important;
+    color: #426677;
+    text-align: center;
+    font-weight: 700;
+}
+
+.aifs-table .aifs-load-error {
+    color: #942424;
+}
+
+.aifs-table tbody tr:nth-child(even) th,
+.aifs-table tbody tr:nth-child(even) td {
+    background: var(--aifs-soft);
+}
+
+.aifs-table tbody tr:hover th,
+.aifs-table tbody tr:hover td {
+    background: #eaf7fb;
+}
+
+.aifs-table tbody tr.aifs-new-day th,
+.aifs-table tbody tr.aifs-new-day td {
+    border-top: 3px solid var(--aifs-cyan);
+}
+
+.aifs-table tbody th {
+    color: var(--aifs-navy);
+    font-weight: 800;
+}
+
+.aifs-hour {
+    color: #075887;
+    font-weight: 800;
+}
+
+.aifs-condition {
+    min-width: 112px;
+    text-align: left !important;
+}
+
+.aifs-icon {
+    display: inline-block;
+    width: 28px;
+    margin-right: 4px;
+    text-align: center;
+    font-size: 1.15rem;
+}
+
+.aifs-temperature {
+    font-weight: 900;
+}
+
+.aifs-temp-cold { color: #225db4; background: #e5f0ff !important; }
+.aifs-temp-cool { color: #087da1; }
+.aifs-temp-mild { color: #278238; }
+.aifs-temp-warm { color: #c27500; background: #fff6d8 !important; }
+.aifs-temp-hot { color: #d64a16; background: #ffe8dc !important; }
+.aifs-temp-extreme { color: #fff; background: #bb142c !important; }
+
+.aifs-rain {
+    color: #075da3;
+    background: #dff2ff !important;
+    font-weight: 800;
+}
+
+.aifs-direction {
+    display: inline-block;
+    min-width: 31px;
+    margin-left: 3px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: #dfeaf0;
+    color: #274c60;
+    font-size: .7rem;
+    font-weight: 800;
+}
+
+.aifs-gust-moderate { color: #986400; background: #fff4c9 !important; }
+.aifs-gust-strong { color: #b5440a; background: #ffe5d4 !important; }
+.aifs-gust-danger { color: #fff; background: #b7192f !important; }
+
+.aifs-footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 20px;
+    padding: 12px 18px;
+    background: #edf5f8;
+    color: #4d6878;
+    font-size: .72rem;
+}
+
+.aifs-footer a {
+    color: #075f94;
+    font-weight: 700;
+}
+
+.aifs-message {
+    margin: 1rem 0;
+    padding: 13px 16px;
+    border-radius: 8px;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.aifs-error {
+    border: 1px solid #e5b5b5;
+    background: #fff0f0;
+    color: #8a2020;
+}
+
+@media (max-width: 680px) {
+    .aifs-card {
+        border-radius: 10px;
+    }
+
+    .aifs-header {
+        align-items: flex-start;
+        padding: 17px;
+    }
+
+    .aifs-toolbar {
+        display: block;
+        padding: 15px;
+    }
+
+    .aifs-search {
+        width: 100%;
+    }
+
+    .aifs-card .aifs-search-result {
+        display: block;
+    }
+
+    .aifs-result-name,
+    .aifs-result-details {
+        display: block;
+    }
+
+    .aifs-result-details {
+        margin-top: 3px;
+        white-space: normal;
+    }
+
+    .aifs-coverage {
+        display: none;
+    }
+
+    .aifs-badge {
+        min-width: 86px;
+    }
+
+    .aifs-footer {
+        display: block;
+    }
+
+    .aifs-footer span {
+        display: block;
+        margin: 4px 0;
+    }
+}
+
+@media print {
+    .aifs-card {
+        box-shadow: none;
+    }
+
+    .aifs-table-wrap {
+        overflow: visible;
+    }
+
+    .aifs-table {
+        min-width: 0;
+        font-size: 7pt;
+    }
+}
+
+/* === Sélecteur Général / Orages / Neige — v2.3 === */
+.aifs-tabs {
+    display: flex;
+    gap: 10px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #cfe0e9;
+    background: #fff;
+}
+
+.aifs-card .aifs-tab {
+    appearance: none;
+    margin: 0;
+    padding: 10px 16px;
+    border: 1px solid #a9c5d4;
+    border-radius: 999px;
+    background: #f4f8fb;
+    color: #214b61;
+    font: 800 .84rem/1.2 Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.aifs-card .aifs-tab:hover,
+.aifs-card .aifs-tab:focus-visible {
+    outline: 0;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(7, 59, 99, .12);
+}
+
+.aifs-card .aifs-tab.is-active {
+    border-color: #0b6f9f;
+    background: #0b6f9f;
+    color: #fff;
+    box-shadow: 0 6px 15px rgba(11, 111, 159, .22);
+}
+
+.aifs-card .aifs-tab-storm.is-active {
+    border-color: #7b3fa1;
+    background: linear-gradient(135deg, #563072, #8d4ca8);
+    box-shadow: 0 6px 15px rgba(102, 55, 132, .24);
+}
+
+.aifs-card .aifs-tab-snow.is-active {
+    border-color: #2787ad;
+    background: linear-gradient(135deg, #176a91, #50a9c9);
+    box-shadow: 0 6px 15px rgba(23, 106, 145, .24);
+}
+
+.aifs-panel[hidden] {
+    display: none !important;
+}
+
+.aifs-storm-summary {
+    margin: 0;
+    padding: 11px 18px;
+    border-bottom: 1px solid #d8c7e5;
+    background: #f5eff9;
+    color: #55306a;
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.aifs-storm-summary-warning {
+    border-bottom-color: #e6c467;
+    background: #fff6d8;
+    color: #704f00;
+}
+
+.aifs-storm-wrap {
+    background: #fff;
+}
+
+.aifs-storm-table {
+    min-width: 1680px;
+    font-size: .77rem;
+}
+
+.aifs-storm-table thead th {
+    background: #f0e8f6;
+    color: #4f2b63;
+    border-bottom-color: #cbb6d8;
+}
+
+.aifs-storm-table tbody tr:nth-child(even) th,
+.aifs-storm-table tbody tr:nth-child(even) td {
+    background: #fbf8fd;
+}
+
+.aifs-thunder-risk,
+.aifs-hazard {
+    font-weight: 900;
+}
+
+.aifs-thunder-0 { background: #f2f4f5 !important; color: #53616a; }
+.aifs-thunder-1 { background: #e8f7ea !important; color: #207438; }
+.aifs-thunder-2 { background: #fff5c9 !important; color: #806400; }
+.aifs-thunder-3 { background: #ffe3c7 !important; color: #a44600; }
+.aifs-thunder-4 { background: #b81f37 !important; color: #fff; }
+
+.aifs-hazard-0 { color: #3f6c4b; }
+.aifs-hazard-1 { background: #eef7e9 !important; color: #397144; }
+.aifs-hazard-2 { background: #fff0c4 !important; color: #8b6100; }
+.aifs-hazard-3 { background: #ffd9d9 !important; color: #9b2323; }
+
+.aifs-cape-mid {
+    background: #fff2c8 !important;
+    color: #805a00;
+    font-weight: 800;
+}
+
+.aifs-cape-high {
+    background: #ffd5bd !important;
+    color: #a33e00;
+    font-weight: 900;
+}
+
+.aifs-lightning-high {
+    background: #eee3ff !important;
+    color: #5f2e99;
+    font-weight: 900;
+}
+
+.aifs-rain-heavy {
+    background: #d9ebff !important;
+    color: #075aa5;
+    font-weight: 900;
+}
+
+.aifs-storm-type {
+    min-width: 150px;
+    color: #4d2a61;
+    font-weight: 800;
+}
+
+
+.aifs-details-cell {
+    min-width: 74px;
+}
+
+.aifs-card .aifs-details-button {
+    margin: 0;
+    padding: 5px 8px;
+    border: 1px solid #af92c2;
+    border-radius: 7px;
+    background: #f5eff9;
+    color: #5d3471;
+    font: 800 .7rem/1.1 Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.aifs-card .aifs-details-button:hover,
+.aifs-card .aifs-details-button:focus-visible {
+    outline: 0;
+    background: #e9dcf1;
+}
+
+.aifs-advanced-row td {
+    padding: 0 !important;
+    background: #f8f4fb !important;
+}
+
+.aifs-advanced-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(135px, 1fr));
+    gap: 8px;
+    padding: 10px 14px 12px;
+    text-align: left;
+}
+
+.aifs-advanced-item {
+    padding: 8px 10px;
+    border: 1px solid #ddd0e6;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.aifs-advanced-label,
+.aifs-advanced-value {
+    display: block;
+}
+
+.aifs-advanced-label {
+    margin-bottom: 3px;
+    color: #6c5875;
+    font-size: .66rem;
+    font-weight: 700;
+}
+
+.aifs-advanced-value {
+    color: #47275a;
+    font-size: .82rem;
+    font-weight: 900;
+}
+
+.aifs-storm-note {
+    margin: 0;
+    padding: 13px 18px 15px;
+    border-top: 1px solid #e1d7e8;
+    background: #faf8fc;
+    color: #665b6c;
+    font-size: .72rem;
+    line-height: 1.45;
+}
+
+
+/* === Risque de neige — v2.3 === */
+.aifs-snow-summary {
+    margin: 0;
+    padding: 11px 18px;
+    border-bottom: 1px solid #b9d8e5;
+    background: #edf8fc;
+    color: #175a76;
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+.aifs-snow-summary-warning {
+    border-bottom-color: #e6c467;
+    background: #fff6d8;
+    color: #704f00;
+}
+
+.aifs-snow-table {
+    min-width: 1220px;
+    font-size: .8rem;
+}
+
+.aifs-snow-table thead th {
+    background: #e8f5fa;
+    color: #175a76;
+    border-bottom-color: #add2e0;
+}
+
+.aifs-snow-table tbody tr:nth-child(even) th,
+.aifs-snow-table tbody tr:nth-child(even) td {
+    background: #f7fbfd;
+}
+
+.aifs-snow-risk,
+.aifs-stick {
+    font-weight: 900;
+}
+
+.aifs-snow-0 { background: #f2f4f5 !important; color: #53616a; }
+.aifs-snow-1 { background: #e8f7ea !important; color: #207438; }
+.aifs-snow-2 { background: #fff5c9 !important; color: #806400; }
+.aifs-snow-3 { background: #dceeff !important; color: #145d91; }
+.aifs-snow-4 { background: #255f9a !important; color: #fff; }
+
+.aifs-stick-0 { color: #66747c; }
+.aifs-stick-1 { color: #36714a; }
+.aifs-stick-2 { background: #e8f3ff !important; color: #205f95; }
+.aifs-stick-3 { background: #cfe5ff !important; color: #114f86; }
+
+.aifs-snow-note {
+    margin: 0;
+    padding: 13px 18px 15px;
+    border-top: 1px solid #d2e6ee;
+    background: #f8fcfd;
+    color: #526b76;
+    font-size: .72rem;
+    line-height: 1.45;
+}
+
+/* === Ajustements v2.4 : dates groupées, vent/pluie colorés, diagrammes === */
+.aifs-day-cell {
+    min-width: 66px;
+    padding: 7px 6px !important;
+    vertical-align: middle;
+    border-right: 1px solid #9ed7d7 !important;
+    background: #dff8f6 !important;
+    color: #075887 !important;
+    text-align: center !important;
+    white-space: normal !important;
+}
+
+.aifs-day-weekday,
+.aifs-day-date {
+    display: block;
+    line-height: 1.15;
+}
+
+.aifs-day-weekday {
+    margin-bottom: 4px;
+    font-size: .76rem;
+    font-weight: 900;
+    text-transform: capitalize;
+}
+
+.aifs-day-date {
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.aifs-hour {
+    min-width: 54px;
+}
+
+.aifs-wind-cell strong {
+    display: inline-block;
+    min-width: 58px;
+}
+
+.aifs-direction {
+    display: inline-flex;
+    min-width: 48px;
+    margin-left: 5px;
+    padding: 3px 5px;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border-radius: 6px;
+    background: #edf3f6;
+    color: #274c60;
+    font-size: .69rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.aifs-wind-arrow {
+    display: inline-block;
+    width: 15px;
+    transform-origin: 50% 50%;
+    font-size: .95rem;
+    line-height: 1;
+}
+
+.aifs-wind-light { color: #26725b; }
+.aifs-direction.aifs-wind-light { background: #e7f6ef; }
+.aifs-wind-moderate { color: #32729b; }
+.aifs-direction.aifs-wind-moderate { background: #e5f1f8; }
+.aifs-wind-fresh { color: #8b6500; }
+.aifs-direction.aifs-wind-fresh { background: #fff4c9; }
+.aifs-wind-strong { color: #b34a0a; }
+.aifs-direction.aifs-wind-strong { background: #ffe4cf; }
+.aifs-wind-violent { color: #a4142d; }
+.aifs-direction.aifs-wind-violent { background: #ffd9df; }
+
+.aifs-rain-trace {
+    background: #eef9ff !important;
+    color: #35779a !important;
+}
+.aifs-rain-light {
+    background: #dff3ff !important;
+    color: #126493 !important;
+}
+.aifs-rain-moderate {
+    background: #bfe7ff !important;
+    color: #075b91 !important;
+}
+.aifs-rain-strong {
+    background: #81c9f3 !important;
+    color: #063f70 !important;
+}
+.aifs-rain-intense {
+    background: #225ea8 !important;
+    color: #fff !important;
+}
+
+.aifs-top-scroll {
+    height: 18px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-bottom: 1px solid #d8c7e5;
+    background: #fbf8fd;
+    scrollbar-color: #9d7caf #eee6f3;
+}
+
+.aifs-top-scroll[hidden] {
+    display: none !important;
+}
+
+.aifs-top-scroll > div {
+    height: 1px;
+}
+
+.aifs-advanced-list {
+    display: flex;
+    width: min(100%, 520px);
+    margin: 0;
+    padding: 10px 14px 12px;
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+}
+
+.aifs-advanced-list .aifs-advanced-item {
+    display: flex;
+    padding: 7px 10px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid #ddd0e6;
+    border-radius: 7px;
+    background: #fff;
+}
+
+.aifs-advanced-list .aifs-advanced-label,
+.aifs-advanced-list .aifs-advanced-value {
+    display: block;
+    margin: 0;
+}
+
+.aifs-advanced-list .aifs-advanced-label {
+    color: #6c5875;
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.aifs-advanced-list .aifs-advanced-value {
+    color: #47275a;
+    font-size: .82rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.aifs-charts {
+    display: grid;
+    gap: 16px;
+    padding: 20px 18px 22px;
+    border-top: 1px solid #dbe7ee;
+    background: #f7fafc;
+}
+
+.aifs-chart-card {
+    overflow: hidden;
+    border: 1px solid #d4e2ea;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 5px 16px rgba(7, 59, 99, .07);
+}
+
+.aifs-chart-card h3 {
+    margin: 0;
+    padding: 13px 15px 8px;
+    color: #123f5a;
+    font-size: .94rem;
+    font-weight: 900;
+}
+
+.aifs-chart-total {
+    margin: -3px 15px 2px;
+    color: #0a679a;
+    font-size: .78rem;
+    font-weight: 900;
+}
+
+.aifs-chart {
+    min-height: 180px;
+    padding: 0 8px 8px;
+}
+
+.aifs-chart-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 180px;
+}
+
+.aifs-chart-grid {
+    stroke: #dce7ed;
+    stroke-width: 1;
+}
+
+.aifs-chart-axis {
+    fill: #607987;
+    font: 700 11px/1 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.aifs-chart-xaxis {
+    font-size: 10px;
+}
+
+.aifs-chart-axis-cumulative {
+    fill: #315a8d;
+}
+
+.aifs-chart-line {
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.aifs-series-temperature { stroke: #d45b29; }
+.aifs-series-pressure { stroke: #5d4ba7; }
+.aifs-series-wind { stroke: #1c7f8c; }
+.aifs-series-gust { stroke: #d07a23; }
+.aifs-series-rain-cumulative { stroke: #315a8d; stroke-width: 2.4; }
+.aifs-chart-rain-bar { fill: #45a9dd; }
+
+.aifs-chart-empty {
+    display: flex;
+    min-height: 170px;
+    align-items: center;
+    justify-content: center;
+    color: #687f8a;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+@media (max-width: 680px) {
+    .aifs-tabs {
+        gap: 7px;
+        padding: 11px 12px;
+        overflow-x: auto;
+    }
+
+    .aifs-card .aifs-tab {
+        flex: 0 0 auto;
+        padding: 9px 12px;
+        font-size: .78rem;
+    }
+
+    .aifs-storm-summary,
+    .aifs-snow-summary,
+    .aifs-storm-note,
+    .aifs-snow-note {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
+
+    .aifs-advanced-list {
+        width: auto;
+        padding: 9px;
+    }
+
+    .aifs-advanced-list .aifs-advanced-item {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .aifs-charts {
+        padding: 14px 10px 16px;
+    }
+
+    .aifs-chart-card h3 {
+        padding-right: 12px;
+        padding-left: 12px;
+        font-size: .86rem;
+    }
+
+    .aifs-chart {
+        overflow-x: auto;
+        padding-right: 3px;
+        padding-left: 3px;
+    }
+
+    .aifs-chart-svg {
+        width: 760px;
+        max-width: none;
+    }
+}
+
+
+/* === Ajustements v2.5 : jours colorés, vents par pas de 5, orages compacts === */
+.aifs-day-cell {
+    border-right-width: 2px !important;
+}
+.aifs-day-mon { background: #e5f1ff !important; border-right-color: #6da8e8 !important; color: #175a91 !important; }
+.aifs-day-tue { background: #e8f7ea !important; border-right-color: #72b67d !important; color: #246b36 !important; }
+.aifs-day-wed { background: #fff0df !important; border-right-color: #e6a45f !important; color: #8a4a08 !important; }
+.aifs-day-thu { background: #efe7fb !important; border-right-color: #9f7bd1 !important; color: #5e3a8b !important; }
+.aifs-day-fri { background: #e1f7f5 !important; border-right-color: #5ab7ad !important; color: #17675f !important; }
+.aifs-day-sat { background: #fbe8f2 !important; border-right-color: #d986ad !important; color: #8c3c63 !important; }
+.aifs-day-sun { background: #fff5ce !important; border-right-color: #d8ad3c !important; color: #7b5a00 !important; }
+
+.aifs-storm-table {
+    min-width: 1410px;
+}
+
+/* Date et heure restent visibles pendant le défilement horizontal. */
+.aifs-storm-table thead th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    min-width: 70px;
+}
+.aifs-storm-table thead th:nth-child(2) {
+    position: sticky;
+    left: 70px;
+    z-index: 8;
+    min-width: 58px;
+    box-shadow: 4px 0 8px rgba(50, 31, 60, .08);
+}
+.aifs-storm-table tbody .aifs-day-cell {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    min-width: 70px;
+}
+.aifs-storm-table tbody .aifs-hour {
+    position: sticky;
+    left: 70px;
+    z-index: 5;
+    min-width: 58px;
+    background: #f8f4fb !important;
+    box-shadow: 4px 0 8px rgba(50, 31, 60, .06);
+}
+.aifs-storm-table tbody tr:hover .aifs-hour {
+    background: #eee4f5 !important;
+}
+
+.aifs-details-cell {
+    min-width: 178px;
+    padding: 6px 7px !important;
+    vertical-align: top;
+}
+.aifs-card .aifs-details-button {
+    width: 100%;
+    min-height: 29px;
+}
+.aifs-details-inline {
+    width: 100%;
+    margin-top: 7px;
+    padding: 0;
+    gap: 5px;
+}
+.aifs-details-inline[hidden] {
+    display: none !important;
+}
+.aifs-details-inline .aifs-advanced-item {
+    display: block;
+    padding: 6px 7px;
+    border-radius: 6px;
+    text-align: left;
+}
+.aifs-details-inline .aifs-advanced-label {
+    margin: 0 0 2px;
+    font-size: .64rem;
+    line-height: 1.15;
+    white-space: normal;
+}
+.aifs-details-inline .aifs-advanced-value {
+    font-size: .76rem;
+    line-height: 1.15;
+    white-space: nowrap;
+}
+
+.aifs-top-scroll {
+    height: 20px;
+    border-top: 1px solid #e2d6ea;
+}
+
+/* Teinte légère de la colonne Heure, assortie au jour. */
+.aifs-hour-mon { background: #f3f8ff !important; }
+.aifs-hour-tue { background: #f2faf3 !important; }
+.aifs-hour-wed { background: #fff8f0 !important; }
+.aifs-hour-thu { background: #f8f4fd !important; }
+.aifs-hour-fri { background: #f1fbfa !important; }
+.aifs-hour-sat { background: #fff5fa !important; }
+.aifs-hour-sun { background: #fffaf0 !important; }
+.aifs-storm-table tbody .aifs-hour-mon { background: #f3f8ff !important; }
+.aifs-storm-table tbody .aifs-hour-tue { background: #f2faf3 !important; }
+.aifs-storm-table tbody .aifs-hour-wed { background: #fff8f0 !important; }
+.aifs-storm-table tbody .aifs-hour-thu { background: #f8f4fd !important; }
+.aifs-storm-table tbody .aifs-hour-fri { background: #f1fbfa !important; }
+.aifs-storm-table tbody .aifs-hour-sat { background: #fff5fa !important; }
+.aifs-storm-table tbody .aifs-hour-sun { background: #fffaf0 !important; }
+
+/* === Altitude visible et profil neige expert === */
+.aifs-city-altitude {
+    display: inline-flex;
+    margin: 7px 0 4px;
+    padding: 5px 9px;
+    align-items: center;
+    border: 1px solid #c8dbe3;
+    border-radius: 999px;
+    background: #f2f8fa;
+    color: #245b70;
+    font-size: .76rem;
+    font-weight: 850;
+    line-height: 1.2;
+}
+.aifs-city-altitude.aifs-altitude-missing {
+    border-color: #e2ca84;
+    background: #fff7dd;
+    color: #795b05;
+}
+
+.aifs-snow-table {
+    min-width: 1260px;
+}
+
+.aifs-snow-wind {
+    min-width: 142px;
+    white-space: nowrap;
+}
+.aifs-snow-wind strong {
+    display: block;
+    margin-bottom: 5px;
+}
+.aifs-thickness {
+    min-width: 88px;
+    font-weight: 900;
+    color: #315f78;
+}
+
+.aifs-snow-details-cell {
+    min-width: 205px;
+}
+.aifs-snow-profile {
+    display: flex;
+    width: 100%;
+    margin-top: 7px;
+    padding: 0;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+}
+.aifs-snow-profile[hidden] {
+    display: none !important;
+}
+.aifs-profile-section {
+    display: block;
+    margin: 0;
+    padding: 7px;
+    border: 1px solid #c8dfe8;
+    border-radius: 7px;
+    background: #f8fcfe;
+}
+.aifs-profile-title {
+    display: block;
+    margin: 0 0 6px;
+    color: #175a76;
+    font-size: .7rem;
+    font-weight: 900;
+}
+.aifs-profile-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.aifs-profile-item {
+    display: flex;
+    padding: 4px 5px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-radius: 5px;
+    background: #fff;
+}
+.aifs-profile-label {
+    color: #59717c;
+    font-size: .66rem;
+    font-weight: 800;
+}
+.aifs-profile-value {
+    color: #123f53;
+    font-size: .74rem;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+/* La date et l'heure restent lisibles dans le tableau neige aussi. */
+.aifs-snow-table thead th:nth-child(1) {
+    position: sticky;
+    left: 0;
+    z-index: 8;
+    min-width: 70px;
+}
+.aifs-snow-table thead th:nth-child(2) {
+    position: sticky;
+    left: 70px;
+    z-index: 8;
+    min-width: 58px;
+    box-shadow: 4px 0 8px rgba(20, 78, 104, .08);
+}
+.aifs-snow-table tbody .aifs-day-cell {
+    position: sticky;
+    left: 0;
+    z-index: 6;
+    min-width: 70px;
+}
+.aifs-snow-table tbody .aifs-hour {
+    position: sticky;
+    left: 70px;
+    z-index: 5;
+    min-width: 58px;
+    box-shadow: 4px 0 8px rgba(20, 78, 104, .06);
+}
+
+
+/* === Diagrammes AROME-IFS modernisés === */
+.aifs-charts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    padding: 24px 20px 28px;
+    background:
+        radial-gradient(circle at top left, rgba(45, 137, 184, .07), transparent 38%),
+        #f5f9fb;
+}
+
+.aifs-chart-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #d7e5ec;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #ffffff 0%, #fbfdfe 100%);
+    box-shadow: 0 10px 28px rgba(20, 67, 94, .09);
+}
+
+.aifs-chart-card::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2487b2, #60b8d5 45%, #9bcddd);
+    content: "";
+}
+
+.aifs-chart-card h3 {
+    margin: 0;
+    padding: 18px 18px 7px;
+    color: #123e57;
+    font-size: 1rem;
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+.aifs-chart-total {
+    margin: 0 18px 4px;
+    color: #126d9c;
+    font-size: .78rem;
+    font-weight: 900;
+}
+
+.aifs-chart {
+    min-height: 260px;
+    padding: 4px 12px 14px;
+}
+
+.aifs-chart-metrics {
+    display: flex;
+    gap: 7px;
+    margin: 2px 4px 8px;
+    flex-wrap: wrap;
+}
+
+.aifs-chart-metric {
+    display: inline-flex;
+    min-height: 28px;
+    padding: 5px 9px;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #dce8ee;
+    border-radius: 999px;
+    background: #f6fafc;
+    color: #466573;
+    font-size: .69rem;
+    font-weight: 800;
+}
+
+.aifs-chart-metric-label {
+    color: #6d8792;
+    font-weight: 750;
+}
+
+.aifs-chart-metric-value {
+    color: #173f55;
+    font-weight: 950;
+}
+
+.aifs-chart-viewport {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: #a9c7d5 transparent;
+}
+
+.aifs-chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 660px;
+    height: auto;
+    min-height: 235px;
+    overflow: visible;
+}
+
+.aifs-chart-grid {
+    stroke: rgba(96, 128, 143, .22);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.aifs-chart-grid-vertical {
+    stroke-dasharray: 3 6;
+    opacity: .55;
+}
+
+.aifs-chart-axis {
+    fill: #617985;
+    font: 750 11px/1 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.aifs-chart-xaxis {
+    fill: #486575;
+    font-size: 10px;
+    font-weight: 850;
+}
+
+.aifs-chart-legend-text {
+    fill: #3d5968;
+    font-weight: 850;
+}
+
+.aifs-chart-line {
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    filter: drop-shadow(0 1px 1px rgba(21, 56, 73, .12));
+}
+
+.aifs-chart-point {
+    stroke: #fff;
+    stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    cursor: help;
+}
+
+.aifs-chart-value-label {
+    paint-order: stroke;
+    stroke: #fff;
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    font: 900 11px/1 Inter, "Segoe UI", Arial, sans-serif;
+}
+
+.aifs-chart-area {
+    stroke: none !important;
+    opacity: .14;
+}
+
+.aifs-series-temperature { stroke: #df6c2f; }
+.aifs-chart-area.aifs-series-temperature { fill: #f2a06e; opacity: .18; }
+.aifs-chart-value-label.aifs-series-temperature { fill: #b44b17; }
+
+.aifs-series-pressure { stroke: #6758b3; }
+.aifs-chart-area.aifs-series-pressure { fill: #9185cf; opacity: .14; }
+.aifs-chart-value-label.aifs-series-pressure { fill: #514593; }
+
+.aifs-series-wind { stroke: #197e91; }
+.aifs-series-gust { stroke: #db7b25; }
+.aifs-chart-wind-envelope {
+    fill: #e8b16f;
+    opacity: .16;
+    stroke: none;
+}
+
+.aifs-series-rain-cumulative { stroke: #316b9d; }
+.aifs-chart-rain-bar { fill: #5cb8de; }
+.aifs-chart-rain-trace { fill: #9bd6ed; }
+.aifs-chart-rain-light { fill: #62bfe4; }
+.aifs-chart-rain-moderate { fill: #318fc8; }
+.aifs-chart-rain-strong { fill: #2667b2; }
+.aifs-chart-rain-intense { fill: #6551a8; }
+
+.aifs-chart-day-band {
+    pointer-events: none;
+    opacity: .42;
+}
+.aifs-dayband-mon { fill: #eaf4ff; }
+.aifs-dayband-tue { fill: #edf8ef; }
+.aifs-dayband-wed { fill: #fff4e8; }
+.aifs-dayband-thu { fill: #f4edfc; }
+.aifs-dayband-fri { fill: #eaf9f7; }
+.aifs-dayband-sat { fill: #fceef5; }
+.aifs-dayband-sun { fill: #fff8dc; }
+.aifs-dayband-other { fill: #f5f7f8; }
+
+.aifs-chart-day-label {
+    font: 900 10px/1 Inter, "Segoe UI", Arial, sans-serif;
+    letter-spacing: .02em;
+    text-transform: capitalize;
+}
+.aifs-daylabel-mon { fill: #3978b2; }
+.aifs-daylabel-tue { fill: #397b47; }
+.aifs-daylabel-wed { fill: #9a5d18; }
+.aifs-daylabel-thu { fill: #6f4c9b; }
+.aifs-daylabel-fri { fill: #28756e; }
+.aifs-daylabel-sat { fill: #9c4a72; }
+.aifs-daylabel-sun { fill: #846614; }
+.aifs-daylabel-other { fill: #647b87; }
+
+.aifs-chart-empty {
+    min-height: 230px;
+    border: 1px dashed #d5e1e7;
+    border-radius: 12px;
+    background: #fafcfd;
+}
+
+@media (max-width: 1040px) {
+    .aifs-charts {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 680px) {
+    .aifs-charts {
+        gap: 14px;
+        padding: 14px 9px 18px;
+    }
+
+    .aifs-chart-card {
+        border-radius: 14px;
+    }
+
+    .aifs-chart-card h3 {
+        padding: 15px 13px 7px;
+        font-size: .9rem;
+    }
+
+    .aifs-chart-total {
+        margin-right: 13px;
+        margin-left: 13px;
+    }
+
+    .aifs-chart {
+        min-height: 245px;
+        padding: 3px 6px 10px;
+        overflow: visible;
+    }
+
+    .aifs-chart-metrics {
+        margin-right: 6px;
+        margin-left: 6px;
+    }
+
+    .aifs-chart-metric {
+        padding: 4px 8px;
+        font-size: .65rem;
+    }
+
+    .aifs-chart-viewport {
+        border-radius: 10px;
+    }
+
+    .aifs-chart-svg {
+        width: 760px;
+        min-width: 760px;
+        max-width: none;
+    }
+}
+
+/* === v2.8 : grands diagrammes + vraies infobulles + géolocalisation === */
+.aifs-charts {
+    grid-template-columns: 1fr !important;
+    gap: 24px;
+    padding: 26px 20px 30px;
+}
+
+.aifs-chart-card {
+    width: 100%;
+}
+
+.aifs-chart-card h3 {
+    padding: 20px 20px 8px;
+    font-size: 1.08rem;
+}
+
+.aifs-chart-total {
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: .86rem;
+}
+
+.aifs-chart {
+    min-height: 420px;
+    padding: 6px 16px 18px;
+}
+
+.aifs-chart-metrics {
+    gap: 9px;
+    margin: 4px 8px 12px;
+}
+
+.aifs-chart-metric {
+    min-height: 32px;
+    padding: 6px 11px;
+    font-size: .76rem;
+}
+
+.aifs-chart-viewport {
+    position: relative;
+    min-height: 390px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.aifs-chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 900px;
+    min-height: 390px;
+    max-width: none;
+}
+
+.aifs-chart-axis {
+    font-size: 13px;
+}
+
+.aifs-chart-xaxis {
+    font-size: 12px;
+}
+
+.aifs-chart-day-label {
+    font-size: 12px;
+}
+
+.aifs-chart-legend-text {
+    font-size: 12px;
+}
+
+.aifs-chart-line {
+    stroke-width: 3.6;
+}
+
+.aifs-chart-point {
+    transition: r .12s ease, filter .12s ease;
+    cursor: crosshair;
+}
+
+.aifs-chart-point:hover,
+.aifs-chart-point:focus {
+    r: 7.2px;
+    outline: none;
+    filter: drop-shadow(0 0 4px rgba(20, 62, 83, .32));
+}
+
+.aifs-chart-rain-bar {
+    cursor: crosshair;
+}
+
+.aifs-chart-rain-bar:hover,
+.aifs-chart-rain-bar:focus {
+    outline: none;
+    filter: brightness(.92) drop-shadow(0 2px 3px rgba(20, 62, 83, .22));
+}
+
+.aifs-chart-tooltip {
+    position: absolute;
+    z-index: 40;
+    max-width: 260px;
+    padding: 8px 11px;
+    border: 1px solid rgba(12, 70, 101, .16);
+    border-radius: 9px;
+    background: rgba(14, 49, 69, .96);
+    box-shadow: 0 8px 24px rgba(5, 37, 55, .22);
+    color: #fff;
+    font: 800 12px/1.35 Inter, "Segoe UI", Arial, sans-serif;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translateY(-100%);
+}
+
+.aifs-card .aifs-locate-button {
+    display: inline-flex;
+    min-height: 36px;
+    margin: 8px 0 0;
+    padding: 7px 12px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #8dbdd1;
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(7, 59, 99, .06);
+    color: #0b628f;
+    font: 850 .78rem/1.15 Inter, "Segoe UI", Arial, sans-serif;
+    cursor: pointer;
+}
+
+.aifs-card .aifs-locate-button:hover,
+.aifs-card .aifs-locate-button:focus-visible {
+    outline: none;
+    border-color: #277fa8;
+    background: #eaf7fc;
+}
+
+.aifs-card .aifs-locate-button:disabled,
+.aifs-card .aifs-locate-button.is-loading {
+    opacity: .65;
+    cursor: wait;
+}
+
+/* Le bouton ajoute de la hauteur sous le champ : la liste de résultats descend. */
+.aifs-search-results {
+    top: 116px;
+}
+
+@media (max-width: 680px) {
+    .aifs-charts {
+        gap: 18px;
+        padding: 16px 8px 20px;
+    }
+
+    .aifs-chart-card h3 {
+        padding: 16px 13px 7px;
+        font-size: .95rem;
+    }
+
+    .aifs-chart {
+        min-height: 390px;
+        padding: 4px 6px 12px;
+    }
+
+    .aifs-chart-viewport {
+        min-height: 360px;
+    }
+
+    .aifs-chart-svg {
+        width: 1050px;
+        min-width: 1050px;
+        min-height: 360px;
+    }
+
+    .aifs-chart-tooltip {
+        font-size: 11px;
+    }
+
+    .aifs-card .aifs-locate-button {
+        width: 100%;
+    }
+}
+
+
+/* v2.8.1 — graphiques en traits uniquement, sans zones remplies */
+.aifs-chart-area,
+.aifs-chart-wind-envelope {
+    display: none !important;
+    fill: none !important;
+    opacity: 0 !important;
+}
+
+.aifs-chart-line {
+    stroke-width: 2.35 !important;
+    filter: none !important;
+}
+
+.aifs-chart-point {
+    r: 4px;
+    fill: #fff !important;
+    stroke-width: 2.2 !important;
+}
+
+.aifs-chart-point.aifs-series-temperature { stroke: #df6c2f !important; }
+.aifs-chart-point.aifs-series-pressure { stroke: #6758b3 !important; }
+.aifs-chart-point.aifs-series-wind { stroke: #197e91 !important; }
+.aifs-chart-point.aifs-series-gust { stroke: #db7b25 !important; }
+.aifs-chart-point.aifs-series-rain-cumulative { stroke: #316b9d !important; }
+
+.aifs-chart-day-band {
+    opacity: .20 !important;
+}
+
+
+/* v2.8.2 — correctif définitif des courbes SVG */
+.aifs-chart-svg path.aifs-chart-line,
+.aifs-chart-svg .aifs-chart-line {
+    fill: none !important;
+}
+
+/* Le cumul des précipitations est centré sous le titre du graphique. */
+.aifs-chart-card .aifs-chart-total {
+    width: auto;
+    margin: 4px auto 8px !important;
+    padding: 0 16px;
+    text-align: center !important;
+}
+
+.aifs-plugin-version {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border: 1px solid #cfdde4;
+    border-radius: 999px;
+    background: #f7fafb;
+    color: #607985;
+    font-size: .68rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+/* v2.8.3 — journées nettement identifiables dans les diagrammes */
+.aifs-chart-day-band {
+    opacity: .38 !important;
+}
+
+.aifs-chart-day-strip {
+    pointer-events: none;
+    opacity: .94;
+}
+.aifs-daystrip-mon { fill: #9cc9f3; }
+.aifs-daystrip-tue { fill: #9bd3a5; }
+.aifs-daystrip-wed { fill: #f5bd7c; }
+.aifs-daystrip-thu { fill: #c3a7e5; }
+.aifs-daystrip-fri { fill: #8ed4cb; }
+.aifs-daystrip-sat { fill: #e9a9c8; }
+.aifs-daystrip-sun { fill: #efd26e; }
+.aifs-daystrip-other { fill: #c8d4da; }
+
+.aifs-chart-day-separator {
+    pointer-events: none;
+    stroke-width: 2.2;
+    stroke-dasharray: 5 4;
+    opacity: .72;
+}
+.aifs-dayseparator-mon { stroke: #4c8bc5; }
+.aifs-dayseparator-tue { stroke: #4c925a; }
+.aifs-dayseparator-wed { stroke: #c57a25; }
+.aifs-dayseparator-thu { stroke: #7f5cac; }
+.aifs-dayseparator-fri { stroke: #388d83; }
+.aifs-dayseparator-sat { stroke: #b25f87; }
+.aifs-dayseparator-sun { stroke: #ad8617; }
+.aifs-dayseparator-other { stroke: #8399a3; }
+
+.aifs-chart-day-label {
+    font-size: 12px !important;
+    font-weight: 950 !important;
+    letter-spacing: .035em !important;
+    paint-order: stroke;
+    stroke: rgba(255,255,255,.82);
+    stroke-width: 2px;
+    stroke-linejoin: round;
+}
+
+@media (max-width: 720px) {
+    .aifs-chart-day-label {
+        font-size: 11px !important;
+    }
+}
+/* v2.8.5 — courbes simplifiées : sans points visibles, jours plus gros, meilleure échelle */
+.aifs-chart-value-label {
+    display: none !important;
+}
+
+.aifs-chart-point,
+.aifs-chart-hitpoint {
+    vector-effect: non-scaling-stroke;
+}
+
+.aifs-chart-point {
+    display: none !important;
+}
+
+.aifs-chart-hitpoint {
+    fill: transparent !important;
+    stroke: none !important;
+    opacity: 0 !important;
+    pointer-events: all !important;
+}
+
+.aifs-chart-line {
+    fill: none !important;
+    stroke-width: 2.8 !important;
+}
+
+.aifs-chart-day-strip {
+    height: 46px;
+    opacity: 1 !important;
+}
+
+.aifs-chart-day-label {
+    font-size: 24px !important;
+    font-weight: 1000 !important;
+    letter-spacing: .01em !important;
+    stroke-width: 3px !important;
+}
+
+.aifs-chart-axis {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.aifs-chart-xaxis {
+    font-size: 15px !important;
+}
+
+.aifs-chart-grid {
+    opacity: .72;
+}
+
+@media (max-width: 900px) {
+    .aifs-chart-day-label {
+        font-size: 19px !important;
+    }
+    .aifs-chart-axis {
+        font-size: 14px !important;
+    }
+    .aifs-chart-xaxis {
+        font-size: 13px !important;
+    }
+}
+
+
+/* v2.8.7 — échelle pluie pilotée par le cumul + plus d'air en haut des courbes */
+.aifs-chart-day-label {
+    font-size: 26px !important;
+    font-weight: 1000 !important;
+}
+
+.aifs-chart-day-strip {
+    opacity: 1 !important;
+}
+
+@media (max-width: 900px) {
+    .aifs-chart-day-label {
+        font-size: 20px !important;
+    }
+}
+
+/* Module AROME-IFS unique : la carte partage la carte principale et ses onglets. */
+.aifs-map-panel {
+    padding: 0 !important;
+}
+
+.aifs-map-panel > .aifsm-card {
+    margin: 0;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+.aifs-map-panel .aifsm-header,
+.aifs-map-panel .aifsm-card > .aifs-footer {
+    display: none;
+}
+
+.aifs-map-panel .aifsm-toolbar {
+    border-radius: 0;
+}
+
+.aifs-tab-map {
+    color: #173f78;
+}

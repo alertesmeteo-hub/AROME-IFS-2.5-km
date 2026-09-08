@@ -29,7 +29,7 @@ jobs:
           path: reference-arome
       - uses: actions/checkout@v4
         with:
-          ref: b6790ca
+          ref: b6790ca846ccac2653c7e56ff188c0c33018ccba
           path: ancienne-version-arome-ifs
       - name: Installer WordPress de test et WP-CLI
         run: |

@@ -1,0 +1,52 @@
+name: Test installation WordPress
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  wordpress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: wordpress-test
+          MYSQL_DATABASE: wordpress
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -pwordpress-test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: alertesmeteo-hub/arome-meteofrance
+          ref: fcace746879935fa8c5087eac85ab5cbb11abfdf
+          path: reference-arome
+      - name: Installer WordPress de test et WP-CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /tmp/wp-cli.phar
+          mkdir -p /tmp/wordpress-test
+          cd /tmp/wordpress-test
+          php /tmp/wp-cli.phar core download
+          php /tmp/wp-cli.phar config create --dbname=wordpress --dbuser=root --dbpass=wordpress-test --dbhost=127.0.0.1:3306
+          php /tmp/wp-cli.phar core install --url=http://localhost --title=Test --admin_user=test-admin --admin_password="$(openssl rand -hex 20)" --admin_email=test@example.test --skip-email
+      - name: Installer et activer les vrais ZIP AROME et AROME-IFS
+        run: |
+          cd wordpress
+          zip -qr /tmp/arome-ifs-wordpress.zip arome-ifs-2-5-km
+          cd "$GITHUB_WORKSPACE/reference-arome/wordpress"
+          zip -qr /tmp/arome-wordpress.zip arome-meteofrance-france
+          cd /tmp/wordpress-test
+          php /tmp/wp-cli.phar plugin install /tmp/arome-wordpress.zip --activate
+          php /tmp/wp-cli.phar plugin install /tmp/arome-ifs-wordpress.zip --activate
+          php /tmp/wp-cli.phar plugin list
+      - name: Charger les extensions et afficher le shortcode
+        run: |
+          cd /tmp/wordpress-test
+          php /tmp/wp-cli.phar eval 'do_action("wp_enqueue_scripts"); $html = do_shortcode("[arome_ifs_meteo]"); if (strpos($html, "data-aifs-app") === false) { throw new Exception("Shortcode AROME-IFS absent"); } echo "Shortcode AROME-IFS rendu : ".strlen($html)." octets\n";'
+          php /tmp/wp-cli.phar eval 'do_action("admin_init"); do_action("admin_menu"); echo "Administration chargee sans erreur fatale\n";'

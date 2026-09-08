@@ -3,7 +3,7 @@
  * Plugin Name: AROME-IFS Météo-France France — Prévisions communales
  * Plugin URI: https://github.com/alertesmeteo-hub/AROME-IFS-2.5-km
  * Description: Prévisions communales horaires AROME-IFS de Météo-France pour la France métropolitaine et la Corse.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Alertes Météo Hub
  * Requires at least: 5.8
  * Requires PHP: 7.4
@@ -14,30 +14,21 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-/*
- * Une ancienne copie du module peut parfois rester active sous un autre nom
- * de dossier. Dans ce cas, ne redéclarons pas ses fonctions : WordPress peut
- * ainsi charger la nouvelle archive sans erreur fatale "Cannot redeclare".
- */
-if (function_exists('aifs_render_shortcode')) {
-    return;
-}
-
-define('AIFS_VERSION', '1.0.1');
-define('AIFS_RELEASE_DATE', '09/09/2026');
-define('AIFS_OPTION_BASE_URL', 'aifs_national_data_base_url');
+define('AIFS102_VERSION', '1.0.2');
+define('AIFS102_RELEASE_DATE', '09/09/2026');
+define('AIFS102_OPTION_BASE_URL', 'aifs102_national_data_base_url');
 define(
-    'AIFS_DEFAULT_BASE_URL',
+    'AIFS102_DEFAULT_BASE_URL',
     'https://raw.githubusercontent.com/alertesmeteo-hub/AROME-IFS-2.5-km/data'
 );
 
-add_action('wp_enqueue_scripts', 'aifs_register_assets');
-add_action('admin_init', 'aifs_register_settings');
-add_action('admin_menu', 'aifs_add_settings_page');
-add_shortcode('arome_ifs_meteo', 'aifs_render_shortcode');
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'aifs_plugin_action_links');
+add_action('wp_enqueue_scripts', 'aifs102_register_assets');
+add_action('admin_init', 'aifs102_register_settings');
+add_action('admin_menu', 'aifs102_add_settings_page');
+add_shortcode('arome_ifs_meteo', 'aifs102_render_shortcode');
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'aifs102_plugin_action_links');
 
-function aifs_plugin_action_links($links) {
+function aifs102_plugin_action_links($links) {
     $settings_link = sprintf(
         '<a href="%s">%s</a>',
         esc_url(admin_url('options-general.php?page=arome-ifs-2-5-km')),
@@ -55,71 +46,71 @@ function aifs_plugin_action_links($links) {
     return $links;
 }
 
-function aifs_register_assets() {
+function aifs102_register_assets() {
     wp_register_style(
         'aifs-table',
         plugin_dir_url(__FILE__) . 'assets/arome-meteo.css',
         array(),
-        AIFS_VERSION
+        AIFS102_VERSION
     );
     wp_register_script(
         'aifs-table',
         plugin_dir_url(__FILE__) . 'assets/arome-meteo.js',
         array(),
-        AIFS_VERSION,
+        AIFS102_VERSION,
         true
     );
 
 }
 
-function aifs_register_settings() {
+function aifs102_register_settings() {
     register_setting(
-        'aifs_settings',
-        AIFS_OPTION_BASE_URL,
+        'aifs102_settings',
+        AIFS102_OPTION_BASE_URL,
         array(
             'type' => 'string',
             'sanitize_callback' => 'esc_url_raw',
-            'default' => AIFS_DEFAULT_BASE_URL,
+            'default' => AIFS102_DEFAULT_BASE_URL,
         )
     );
 
     add_settings_section(
-        'aifs_main_section',
+        'aifs102_main_section',
         'Source des données nationales',
         '__return_false',
         'arome-ifs-2-5-km'
     );
 
     add_settings_field(
-        'aifs_data_base_url_field',
+        'aifs102_data_base_url_field',
         'Adresse du dossier de données',
-        'aifs_render_url_field',
+        'aifs102_render_url_field',
         'arome-ifs-2-5-km',
-        'aifs_main_section'
+        'aifs102_main_section'
     );
 }
 
-function aifs_render_url_field() {
-    $value = get_option(AIFS_OPTION_BASE_URL, AIFS_DEFAULT_BASE_URL);
+function aifs102_render_url_field() {
+    $value = get_option(AIFS102_OPTION_BASE_URL, AIFS102_DEFAULT_BASE_URL);
     printf(
         '<input type="url" class="regular-text code" name="%1$s" value="%2$s" autocomplete="off">',
-        esc_attr(AIFS_OPTION_BASE_URL),
+        esc_attr(AIFS102_OPTION_BASE_URL),
         esc_attr($value)
     );
     echo '<p class="description">Conservez l’adresse proposée : elle pointe vers la branche nationale « data » du dépôt.</p>';
 }
 
-function aifs_add_settings_page() {
+function aifs102_add_settings_page() {
     add_options_page(
         'Tableau AROME-IFS Météo-France France',
         'AROME-IFS Météo-France',
         'manage_options',
         'arome-ifs-2-5-km',
-        'aifs_render_settings_page'
+        'aifs102_render_settings_page'
     );
 }
 
-function aifs_render_settings_page() {
+function aifs102_render_settings_page() {
     if (!current_user_can('manage_options')) {
         return;
     }
@@ -128,12 +119,12 @@ function aifs_render_settings_page() {
         <h1>AROME-IFS Météo-France France</h1>
         <form action="options.php" method="post">
             <?php
-            settings_fields('aifs_settings');
+            settings_fields('aifs102_settings');
             do_settings_sections('arome-ifs-2-5-km');
             submit_button();
             ?>
         </form>
-        <p><strong>Version du module : <?php echo esc_html(AIFS_VERSION); ?> (<?php echo esc_html(AIFS_RELEASE_DATE); ?>)</strong></p>
+        <p><strong>Version du module : <?php echo esc_html(AIFS102_VERSION); ?> (<?php echo esc_html(AIFS102_RELEASE_DATE); ?>)</strong></p>
         <h2>Shortcode unique</h2>
         <p><code>[arome_ifs_meteo]</code> : prévisions générales, orages, neige et graphiques.</p>
         <p><code>[arome_ifs_meteo code="75056" departement="75" ville="Paris" heures="51"]</code></p>
@@ -143,29 +134,29 @@ function aifs_render_settings_page() {
     <?php
 }
 
-function aifs_base_url() {
-    $url = get_option(AIFS_OPTION_BASE_URL, AIFS_DEFAULT_BASE_URL);
-    return untrailingslashit(apply_filters('aifs_national_data_base_url', $url));
+function aifs102_base_url() {
+    $url = get_option(AIFS102_OPTION_BASE_URL, AIFS102_DEFAULT_BASE_URL);
+    return untrailingslashit(apply_filters('aifs102_national_data_base_url', $url));
 }
 
-function aifs_department_code($value) {
+function aifs102_department_code($value) {
     $code = strtoupper(trim((string) $value));
     return preg_match('/^(?:\d{2}|2A|2B)$/', $code) ? $code : '66';
 }
 
-function aifs_commune_code($value) {
+function aifs102_commune_code($value) {
     $code = strtoupper(trim((string) $value));
     return preg_match('/^[0-9A-Z]{5}$/', $code) ? $code : '66136';
 }
 
-function aifs_unique_identifier() {
+function aifs102_unique_identifier() {
     if (function_exists('wp_unique_id')) {
         return wp_unique_id('aifs-city-');
     }
     return 'aifs-city-' . wp_rand(1000, 999999);
 }
 
-function aifs_render_shortcode($atts) {
+function aifs102_render_shortcode($atts) {
     $atts = shortcode_atts(
         array(
             'ville' => 'Perpignan',
@@ -184,8 +175,8 @@ function aifs_render_shortcode($atts) {
     if ($city_name === '') {
         $city_name = 'Perpignan';
     }
-    $city_code = aifs_commune_code($atts['code']);
-    $department = aifs_department_code($atts['departement']);
+    $city_code = aifs102_commune_code($atts['code']);
+    $department = aifs102_department_code($atts['departement']);
     $title_prefix = trim(sanitize_text_field($atts['titre']));
     if ($title_prefix === '') {
         $title_prefix = 'Prévisions AROME-IFS';
@@ -193,7 +184,7 @@ function aifs_render_shortcode($atts) {
     $selector_value = strtolower(trim(sanitize_text_field($atts['selecteur'])));
     $show_selector = !in_array($selector_value, array('non', '0', 'false', 'off'), true);
 
-    $input_id = aifs_unique_identifier();
+    $input_id = aifs102_unique_identifier();
     $results_id = $input_id . '-results';
     $status_id = $input_id . '-status';
 
@@ -205,7 +196,7 @@ function aifs_render_shortcode($atts) {
     <section
         class="aifs-card aifs-national"
         data-aifs-app
-        data-base-url="<?php echo esc_url(aifs_base_url()); ?>"
+        data-base-url="<?php echo esc_url(aifs102_base_url()); ?>"
         data-default-code="<?php echo esc_attr($city_code); ?>"
         data-default-department="<?php echo esc_attr($department); ?>"
         data-default-name="<?php echo esc_attr($city_name); ?>"
@@ -419,7 +410,7 @@ function aifs_render_shortcode($atts) {
                 <a href="https://geo.api.gouv.fr/decoupage-administratif/communes" target="_blank" rel="noopener noreferrer">API officielle française</a>
                 • <a href="https://www.alertes-meteo.com/" target="_blank" rel="noopener noreferrer">www.alertes-meteo.com</a>
             </span>
-            <span class="aifs-plugin-version">Module AROME-IFS v<?php echo esc_html(AIFS_VERSION); ?> (<?php echo esc_html(AIFS_RELEASE_DATE); ?>)</span>
+            <span class="aifs-plugin-version">Module AROME-IFS v<?php echo esc_html(AIFS102_VERSION); ?> (<?php echo esc_html(AIFS102_RELEASE_DATE); ?>)</span>
         </footer>
 
         <noscript>

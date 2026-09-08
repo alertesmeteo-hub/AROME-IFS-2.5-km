@@ -2,7 +2,7 @@
 Contributors: alertesmeteo-hub
 Requires at least: 5.8
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 Prévisions communales AROME-IFS 0,025° de Météo-France.
@@ -20,7 +20,7 @@ La neige fraîche en cm et son cumul sont estimés, sans fonte ni tassement.
 Cette version comporte des tableaux et graphiques ; les cartes ne sont pas incluses.
 
 == Changelog ==
-= 1.0.1 =
+= 1.0.2 =
 Évite une erreur fatale lorsqu'une ancienne copie du module est encore chargée sous un autre nom de dossier.
 
 == Services externes ==

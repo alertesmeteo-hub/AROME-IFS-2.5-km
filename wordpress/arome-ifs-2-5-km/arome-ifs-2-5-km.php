@@ -3,7 +3,7 @@
  * Plugin Name: AROME-IFS Météo-France France — Prévisions communales
  * Plugin URI: https://github.com/alertesmeteo-hub/AROME-IFS-2.5-km
  * Description: Prévisions communales horaires AROME-IFS de Météo-France pour la France métropolitaine et la Corse.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Alertes Météo Hub
  * Requires at least: 5.8
  * Requires PHP: 7.4
@@ -14,8 +14,17 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-define('AIFS_VERSION', '1.0.0');
-define('AIFS_RELEASE_DATE', '08/09/2026');
+/*
+ * Une ancienne copie du module peut parfois rester active sous un autre nom
+ * de dossier. Dans ce cas, ne redéclarons pas ses fonctions : WordPress peut
+ * ainsi charger la nouvelle archive sans erreur fatale "Cannot redeclare".
+ */
+if (function_exists('aifs_render_shortcode')) {
+    return;
+}
+
+define('AIFS_VERSION', '1.0.1');
+define('AIFS_RELEASE_DATE', '09/09/2026');
 define('AIFS_OPTION_BASE_URL', 'aifs_national_data_base_url');
 define(
     'AIFS_DEFAULT_BASE_URL',

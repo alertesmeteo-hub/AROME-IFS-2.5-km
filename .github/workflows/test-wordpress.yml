@@ -27,6 +27,10 @@ jobs:
           repository: alertesmeteo-hub/arome-meteofrance
           ref: fcace746879935fa8c5087eac85ab5cbb11abfdf
           path: reference-arome
+      - uses: actions/checkout@v4
+        with:
+          ref: b6790ca
+          path: ancienne-version-arome-ifs
       - name: Installer WordPress de test et WP-CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /tmp/wp-cli.phar
@@ -52,7 +56,7 @@ jobs:
           php /tmp/wp-cli.phar eval 'do_action("admin_init"); do_action("admin_menu"); echo "Administration chargee sans erreur fatale\n";'
       - name: Vérifier une ancienne copie encore active
         run: |
-          cp -a /tmp/wordpress-test/wp-content/plugins/arome-ifs-2-5-km /tmp/wordpress-test/wp-content/plugins/arome-ifs-ancienne-copie
+          cp -a "$GITHUB_WORKSPACE/ancienne-version-arome-ifs/wordpress/arome-ifs-2-5-km" /tmp/wordpress-test/wp-content/plugins/arome-ifs-ancienne-copie
           cd /tmp/wordpress-test
           php /tmp/wp-cli.phar plugin activate arome-ifs-ancienne-copie
-          php /tmp/wp-cli.phar eval 'echo shortcode_exists("arome_ifs_meteo") ? "Double copie toleree\n" : "Shortcode absent\n";'
+          php /tmp/wp-cli.phar eval 'if (!shortcode_exists("arome_ifs_meteo")) { throw new Exception("Shortcode absent"); } echo "Ancienne version 1.0.0 et nouvelle version 1.0.2 chargees ensemble\n";'

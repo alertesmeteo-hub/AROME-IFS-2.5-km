@@ -21,13 +21,13 @@ jobs:
           --health-timeout=5s
           --health-retries=10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7
         with:
           repository: alertesmeteo-hub/arome-meteofrance
           ref: fcace746879935fa8c5087eac85ab5cbb11abfdf
           path: reference-arome
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: b6790ca846ccac2653c7e56ff188c0c33018ccba
           path: ancienne-version-arome-ifs

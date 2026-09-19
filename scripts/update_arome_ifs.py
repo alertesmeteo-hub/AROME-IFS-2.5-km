@@ -41,6 +41,9 @@ def get(url):
    if attempt==2:raise
    time.sleep(2**(attempt+1))
 
+class CatalogIncomplete(ValueError):
+ pass
+
 def select_resources(resources):
  runs={}
  for resource in resources:
@@ -55,7 +58,7 @@ def select_resources(resources):
  required={(g,a,b) for g in ('SP1','SP2') for a,b in BLOCKS}
  for run in sorted(runs,reverse=True):
   if required.issubset(runs[run]):return run,{k:runs[run][k] for k in sorted(required)}
- raise ValueError('Catalogue AROME-IFS incomplet ou en cours de publication : dernières données conservées.')
+ raise CatalogIncomplete('Catalogue AROME-IFS incomplet ou en cours de publication : dernières données conservées.')
 
 def step_hours(value):
  m=re.fullmatch(r'(\d+(?:\.\d+)?)([smhd]?)',str(value).lower())
@@ -149,7 +152,9 @@ def validate_product(root):
 
 def build(catalog_path,output,repository,force=False):
  catalog=schema.load_catalog(Path(catalog_path))
- run,resources=select_resources(json.loads(get(DATASET))['resources'])
+ try:run,resources=select_resources(json.loads(get(DATASET))['resources'])
+ except CatalogIncomplete as e:
+  print(f'::warning title=Catalogue AROME-IFS incomplet::{e}',flush=True);return
  run_date=datetime.fromisoformat(run.replace('Z','+00:00'))
  if datetime.now(timezone.utc)-run_date>timedelta(hours=30):raise ValueError('Calcul AROME-IFS trop ancien')
  try:current=json.loads(get(f'https://raw.githubusercontent.com/{repository}/data/index.json'))

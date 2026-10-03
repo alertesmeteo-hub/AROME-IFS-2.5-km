@@ -13,6 +13,7 @@ DATASET='https://www.data.gouv.fr/api/1/datasets/6a3294c7190dd2ab81bef620/'
 SOURCE_PAGE='https://www.data.gouv.fr/datasets/paquets-arome-ifs-resolution-0-025deg'
 VERSION='1.0.0'
 PATTERN=re.compile(r'^aromeifs__0025__(SP1|SP2)__(\d{2})H(\d{2})H__(.+)\.grib2$')
+MIN_PARTIAL_HOURS=12
 BLOCKS=[(0,6)]+[(s,min(s+5,51)) for s in range(7,52,6)]
 FIELDS={
  '2t':('temperature_k',('K',),'heightAboveGround',2),
@@ -57,7 +58,14 @@ def select_resources(resources):
   runs[run][key]=resource
  required={(g,a,b) for g in ('SP1','SP2') for a,b in BLOCKS}
  for run in sorted(runs,reverse=True):
-  if required.issubset(runs[run]):return run,{k:runs[run][k] for k in sorted(required)}
+  if required.issubset(runs[run]):return run,{k:runs[run][k] for k in sorted(required)},51
+  # Run récent mais encore en cours de publication : on garde les blocs contigus depuis +0 h.
+  prefix=[]
+  for a,b in BLOCKS:
+   if ('SP1',a,b) in runs[run] and ('SP2',a,b) in runs[run]:prefix.append((a,b))
+   else:break
+  if prefix and prefix[-1][1]>=MIN_PARTIAL_HOURS:
+   return run,{(g,a,b):runs[run][(g,a,b)] for g in ('SP1','SP2') for a,b in prefix},prefix[-1][1]
  raise CatalogIncomplete('Catalogue AROME-IFS incomplet ou en cours de publication : dernières données conservées.')
 
 def step_hours(value):
@@ -133,6 +141,7 @@ def transform(raw,altitude,previous,lead):
  return data,state
 
 def validate_product(root):
+ hours=json.loads((root/'index.json').read_text())['model']['forecast_hours_requested']
  reference=json.loads((Path(__file__).resolve().parents[1]/'tests/reference-schema.json').read_text())
  index=json.loads((root/'index.json').read_text())
  count=0
@@ -140,7 +149,7 @@ def validate_product(root):
   data=json.loads(path.read_text())
   assert data['schema_version']==3
   assert data['columns']=={k:reference[k] for k in ['points','communes','values']}
-  assert len(data['forecast'])==52
+  assert len(data['forecast'])==hours+1
   assert all(len(p)==4 for p in data['points'])
   assert all(len(c)==7 and isinstance(c[6],int) and 0<=c[6]<len(data['points']) for c in data['communes'])
   for hour,(date,rows) in enumerate(data['forecast']):
@@ -148,11 +157,11 @@ def validate_product(root):
    assert datetime.fromisoformat(date.replace('Z','+00:00'))==datetime.fromisoformat(index['model']['run_time'].replace('Z','+00:00'))+timedelta(hours=hour)
   count+=len(data['communes'])
  assert count==index['coverage']['communes'] and len(index['departments'])==96
- print('Contrat v3 vérifié :',count,'communes, 96 départements, 33 colonnes, 52 échéances (+0 à +51 h).',flush=True)
+ print('Contrat v3 vérifié :',count,f'communes, 96 départements, 33 colonnes, {hours+1} échéances (+0 à +{hours} h).',flush=True)
 
 def build(catalog_path,output,repository,force=False):
  catalog=schema.load_catalog(Path(catalog_path))
- try:run,resources=select_resources(json.loads(get(DATASET))['resources'])
+ try:run,resources,hours=select_resources(json.loads(get(DATASET))['resources'])
  except CatalogIncomplete as e:
   print(f'::warning title=Catalogue AROME-IFS incomplet::{e}',flush=True);return
  run_date=datetime.fromisoformat(run.replace('Z','+00:00'))
@@ -161,10 +170,10 @@ def build(catalog_path,output,repository,force=False):
  except urllib.error.HTTPError as e:
   if e.code!=404:raise
   current={}
- if not force and current.get('model',{}).get('run_time')==schema.iso_utc(run_date) and current.get('model',{}).get('pipeline_version')==VERSION:
+ if not force and current.get('model',{}).get('run_time')==schema.iso_utc(run_date) and current.get('model',{}).get('pipeline_version')==VERSION and int(current.get('model',{}).get('forecast_hours_requested',0))>=hours:
   print('Calcul déjà publié, aucune modification.',flush=True);return
  print(f'AROME-IFS {run} : {len(resources)} paquets, {catalog.commune_count} communes.',flush=True)
- raw={i:{} for i in range(52)}
+ raw={i:{} for i in range(hours+1)}
  with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
   jobs={pool.submit(fetch_packet,r,k,run,catalog):k for k,r in resources.items()}
   for job in concurrent.futures.as_completed(jobs):
@@ -185,7 +194,7 @@ def build(catalog_path,output,repository,force=False):
  with tempfile.TemporaryDirectory() as temp:
   temp=Path(temp);handles={code:(temp/f'{code}.ndjson').open('w',encoding='utf-8') for code in catalog.departments}
   try:
-   for lead in range(52):
+   for lead in range(hours+1):
     required={'temperature_k','humidity_pct','wind_u_ms','wind_v_ms','surface_pressure_pa','cape_jkg'}
     if lead:required|={'precipitation_total_mm','snow_total_mm','graupel_total_mm','gust_speed_ms','cloud_low_pct','cloud_mid_pct','cloud_high_pct'}
     if not required.issubset(raw[lead]):raise ValueError(f'Champs manquants à +{lead} h : {required-raw[lead].keys()}')
@@ -198,7 +207,7 @@ def build(catalog_path,output,repository,force=False):
   finally:
    for f in handles.values():f.close()
   department_index,total_bytes=schema.write_departments(output,temp,catalog,generated)
- index={'schema_version':3,'status':'ok','generated_at':generated,'model':{'name':'AROME-IFS 0,025°','provider':'Météo-France','dataset':'Paquets AROME IFS résolution 0,025°','domain':'France métropolitaine','resolution_degrees':.025,'resolution_km':2.5,'native_resolution_km':1.3,'forecast_hours_requested':51,'run_time':schema.iso_utc(run_date),'pipeline_version':VERSION,'catalog_version':catalog.version,'storm_diagnostics':True,'snow_diagnostics':True,'source_url':SOURCE_PAGE,'license':'Licence Ouverte 2.0'},'coverage':{'label':'France métropolitaine et Corse','communes':catalog.commune_count,'departments':96},'condition_codes':schema.CONDITION_CODES,'diagnostics':{'direct':['température','humidité','vent','rafales','précipitations','neige en équivalent eau','graupel','CAPE','pression','nuages par étage','altitude de grille'],'derived':['nébulosité totale estimée à partir des étages','risque orage indicatif à partir de CAPE','neige fraîche et tenue estimées'],'unavailable':['visibility_km','reflectivity_dbz','lightning_score','hail_risk_code','convective_precipitation_mm','storm_type_code'],'note':'null signifie indisponible, pas zéro. Les diagnostics ne sont pas des vigilances officielles. snow_depth_cm suit la convention historique du cumul estimé de neige fraîche, sans fonte ni tassement : ce n’est pas une hauteur de neige observée au sol.'},'search':{'provider':'API Découpage administratif','endpoint':'https://geo.api.gouv.fr/communes'},'maps':{'status':'unavailable'},'departments':department_index,'total_department_bytes':total_bytes}
+ index={'schema_version':3,'status':'ok','generated_at':generated,'model':{'name':'AROME-IFS 0,025°','provider':'Météo-France','dataset':'Paquets AROME IFS résolution 0,025°','domain':'France métropolitaine','resolution_degrees':.025,'resolution_km':2.5,'native_resolution_km':1.3,'forecast_hours_requested':hours,'run_time':schema.iso_utc(run_date),'pipeline_version':VERSION,'catalog_version':catalog.version,'storm_diagnostics':True,'snow_diagnostics':True,'source_url':SOURCE_PAGE,'license':'Licence Ouverte 2.0'},'coverage':{'label':'France métropolitaine et Corse','communes':catalog.commune_count,'departments':96},'condition_codes':schema.CONDITION_CODES,'diagnostics':{'direct':['température','humidité','vent','rafales','précipitations','neige en équivalent eau','graupel','CAPE','pression','nuages par étage','altitude de grille'],'derived':['nébulosité totale estimée à partir des étages','risque orage indicatif à partir de CAPE','neige fraîche et tenue estimées'],'unavailable':['visibility_km','reflectivity_dbz','lightning_score','hail_risk_code','convective_precipitation_mm','storm_type_code'],'note':'null signifie indisponible, pas zéro. Les diagnostics ne sont pas des vigilances officielles. snow_depth_cm suit la convention historique du cumul estimé de neige fraîche, sans fonte ni tassement : ce n’est pas une hauteur de neige observée au sol.'},'search':{'provider':'API Découpage administratif','endpoint':'https://geo.api.gouv.fr/communes'},'maps':{'status':'unavailable'},'departments':department_index,'total_department_bytes':total_bytes}
  (output/'index.json').write_text(json.dumps(index,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
  validate_product(output)
 

@@ -76,8 +76,8 @@ jobs:
           import json, sys
           source = json.load(open(sys.argv[1], encoding='utf-8'))['model']
           remote = json.load(open(sys.argv[2], encoding='utf-8'))['model']
-          source_key = (source['run_time'], source.get('pipeline_version', ''))
-          remote_key = (remote['run_time'], remote.get('pipeline_version', ''))
+          source_key = (source['run_time'], source.get('pipeline_version', ''), source.get('forecast_hours_requested', 0))
+          remote_key = (remote['run_time'], remote.get('pipeline_version', ''), remote.get('forecast_hours_requested', 0))
           print('skip' if remote_key >= source_key else 'publish')
           PY
               )"
